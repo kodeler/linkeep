@@ -1,10 +1,8 @@
 'use client';
 import LogoutButton from "@/components/buttons/LogoutButton";
-import {faFileLines} from "@fortawesome/free-regular-svg-icons";
-import {faArrowLeft, faChartLine} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FaFileAlt, FaChartLine, FaArrowLeft, FaKey } from "react-icons/fa";
 import Link from "next/link";
-import {usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function AppSidebar() {
   const path = usePathname();
@@ -16,12 +14,8 @@ export default function AppSidebar() {
           "flex gap-4 p-2 "
           + (path === '/account' ? 'text-blue-500' : '')
         }>
-        <FontAwesomeIcon
-          fixedWidth={true}
-          icon={faFileLines}
-          className={'w-6 h-6'}
-        />
-        <span className="">My Page</span>
+        <FaFileAlt className={'w-6 h-6'} />
+        <span>My Page</span>
       </Link>
       <Link
         href={'/analytics'}
@@ -29,12 +23,17 @@ export default function AppSidebar() {
           "flex gap-4 p-2 "
           + (path === '/analytics' ? 'text-blue-500' : '')
         }>
-        <FontAwesomeIcon
-          fixedWidth={true}
-          icon={faChartLine}
-          className={'w-6 h-6'}
-        />
-        <span className="">Analytics</span>
+        <FaChartLine className={'w-6 h-6'} />
+        <span>Analytics</span>
+      </Link>
+      <Link
+        href={'/api-dashboard'}
+        className={
+          "flex gap-4 p-2 "
+          + (path === '/api-dashboard' ? 'text-blue-500' : '')
+        }>
+        <FaKey className={'w-6 h-6'} />
+        <span>API Keys</span>
       </Link>
       <LogoutButton
         iconLeft={true}
@@ -42,7 +41,7 @@ export default function AppSidebar() {
         iconClasses={'w-6 h-6'}
       />
       <Link href={'/'} className="flex items-center gap-2 text-xs text-gray-500 border-t pt-4">
-        <FontAwesomeIcon icon={faArrowLeft} className={'w-3 h-3'} />
+        <FaArrowLeft className={'w-3 h-3'} />
         <span>Back to website</span>
       </Link>
     </nav>

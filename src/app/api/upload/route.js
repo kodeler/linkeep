@@ -18,7 +18,7 @@ export async function POST(req) {
     const randomId = uniqid();
     const ext = file.name.split('.').pop();
     const newFilename = randomId + '.' + ext;
-    const bucketName = process.env.BUCKET_NAME;
+    const bucketName = process.env.S3_BUCKET_NAME;
 
     const chunks = [];
     for await (const chunk of file.stream()) {

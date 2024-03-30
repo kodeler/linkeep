@@ -1,12 +1,11 @@
 import {authOptions} from "@/app/api/auth/[...nextauth]/route";
+import PageSettingsForm from "@/components/forms/PageSettingsForm";
 import PageButtonsForm from "@/components/forms/PageButtonsForm";
 import PageLinksForm from "@/components/forms/PageLinksForm";
-import PageSettingsForm from "@/components/forms/PageSettingsForm";
 import UsernameForm from "@/components/forms/UsernameForm";
 import {Page} from "@/models/Page";
 import mongoose from "mongoose";
-import {getServerSession} from "next-auth";
-import {redirect} from "next/navigation";
+import {getServerSession, redirect} from "next-auth";
 import cloneDeep from 'clone-deep';
 
 export default async function AccountPage({searchParams}) {
@@ -18,9 +17,10 @@ export default async function AccountPage({searchParams}) {
   mongoose.connect(process.env.MONGO_URI);
   const page = await Page.findOne({owner: session?.user?.email});
 
-  const leanPage = cloneDeep(page.toJSON());
-  leanPage._id = leanPage._id.toString();
+  // Verifica si el objeto page no es null antes de continuar
   if (page) {
+    const leanPage = cloneDeep(page.toJSON());
+    leanPage._id = leanPage._id.toString();
     return (
       <>
         <PageSettingsForm page={leanPage} user={session.user} />
@@ -28,11 +28,12 @@ export default async function AccountPage({searchParams}) {
         <PageLinksForm page={leanPage} user={session.user} />
       </>
     );
+  } else {
+    // Maneja el caso cuando page es null
+    return (
+      <div>
+        <UsernameForm desiredUsername={desiredUsername} />
+      </div>
+    );
   }
-
-  return (
-    <div>
-      <UsernameForm desiredUsername={desiredUsername} />
-    </div>
-  );
 }

@@ -5,6 +5,7 @@ const UserSchema = new Schema({
   email: String,
   image: String,
   emailVerified: Date,
+  apiKey: { type: String, unique: true },
 });
 
 export const User = models?.User || model('User', UserSchema);

@@ -44,7 +44,20 @@ export default async function UserPage({params}) {
   const uri = params.uri;
   mongoose.connect(process.env.MONGO_URI);
   const page = await Page.findOne({uri});
-  const user = await User.findOne({email:page.owner});
+  
+  // Verifica si el objeto page no es null antes de continuar
+  if (!page) {
+    // Puedes manejar el error como prefieras aquí, por ejemplo, devolver una página de error o redireccionar
+    return <div>Page not found</div>;
+  }
+  
+  const user = await User.findOne({email: page.owner});
+  
+  // Asumiendo que quieres manejar también si user es null
+  if (!user) {
+    // Manejo cuando el usuario no se encuentra, similar a como manejas page
+    return <div>User not found</div>;
+  }
   await Event.create({uri:uri, page:uri, type:'view'});
   return (
     <div className="bg-blue-950 text-white min-h-screen">

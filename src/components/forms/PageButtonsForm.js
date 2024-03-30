@@ -36,7 +36,8 @@ function upperFirst(str) {
 
 export default function PageButtonsForm({user,page}) {
 
-  const pageSavedButtonsKeys = Object.keys(page.buttons);
+  // Asegúrate de que page.buttons es un objeto antes de llamar a Object.keys
+  const pageSavedButtonsKeys = Object.keys(page.buttons || {});
   const pageSavedButtonsInfo = pageSavedButtonsKeys
     .map(k => allButtons.find(b => b.key === k));
   const [activeButtons, setActiveButtons] = useState(pageSavedButtonsInfo);
